@@ -18,22 +18,32 @@ import timber.log.Timber
  */
 
 class AppRepository {
+
+    enum class ApiStatus { LOADING, ERROR, DONE }
+
     private val remoteDataSource = RemoteDataSource()
     private val localDataSource = LocalDataSource()
 
     private val job = Job()
     private val scope = CoroutineScope(job + Dispatchers.Main)
 
-    private var forceUpdate: Boolean = true
     val baseModel: MutableLiveData<BaseModel> = MutableLiveData<BaseModel>()
+    val status: MutableLiveData<ApiStatus> = MutableLiveData<ApiStatus>()
 
     init {
         scope.launch {
-            Timber.e("Call STart")
-            val model = remoteDataSource.getFeed()
-            baseModel.value = model
-            Timber.e("Call Complete")
-            Timber.e("Data : ${baseModel.value}")
+
+            try {
+                Timber.e("Call STart")
+                status.value = ApiStatus.LOADING
+                val model = remoteDataSource.getFeed()
+                baseModel.value = model
+                status.value = ApiStatus.DONE
+                Timber.e("Call Complete")
+                Timber.e("Data : ${baseModel.value}")
+            } catch (e: Exception) {
+                status.value = ApiStatus.ERROR
+            }
         }
     }
 

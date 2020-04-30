@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.kprights.itunes.app.model.BaseModel
 import com.kprights.itunes.app.model.Entry
 
 
@@ -17,11 +16,11 @@ import com.kprights.itunes.app.model.Entry
  */
 
 class AppViewModel(application: Application) : AndroidViewModel(application) {
-    enum class ApiStatus { LOADING, ERROR, DONE }
 
     private var repository = AppRepository()
-    val newsFeed: LiveData<BaseModel> = Transformations.map(repository.baseModel) { it }
-    val entry: LiveData<List<Entry>> = Transformations.map(newsFeed) { model -> model.feed.entry }
+    val entry: LiveData<List<Entry>> =
+        Transformations.map(repository.baseModel) { model -> model.feed.entry }
+    val status: LiveData<AppRepository.ApiStatus> = Transformations.map(repository.status) { it }
 
     override fun onCleared() {
         super.onCleared()

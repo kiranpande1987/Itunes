@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="entry"
             type="com.kprights.itunes.app.model.Entry" />
@@ -23,7 +22,8 @@
             android:layout_marginBottom="8dp"
             android:text="@{entry.name.component1()}"
             android:textColor="@android:color/black"
-            android:textSize="24sp"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="8dp"
-            app:imageUrl="@{entry.image.get(0).label}"
+            app:imageUrl="@{entry.image}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
