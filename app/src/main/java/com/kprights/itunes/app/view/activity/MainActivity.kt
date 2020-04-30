@@ -1,7 +1,8 @@
-package com.kprights.itunes.app
+package com.kprights.itunes.app.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.kprights.itunes.app.R
 
 class MainActivity : AppCompatActivity() {
 
