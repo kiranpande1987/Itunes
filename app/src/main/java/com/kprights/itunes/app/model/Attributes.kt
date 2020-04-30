@@ -8,5 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class Attributes(
     @SerializedName("rel") val rel: String,
     @SerializedName("type") val type: String,
-    @SerializedName("href") val href: String
+    @SerializedName("href") val href: String,
+    @SerializedName("amount") val amount: String,
+    @SerializedName("currency") val currency: String
 ) : Parcelable

@@ -40,7 +40,7 @@ class GridFragment : Fragment() {
 
         // RecyclerView To Adapter
         binding.recyclerView.adapter = GridAdapter(GridAdapter.OnClickListener {
-            this.findNavController().navigate(GridFragmentDirections.actionShowDetail(it))
+            findNavController().navigate(GridFragmentDirections.actionShowDetail(it))
         })
 
         return binding.root
