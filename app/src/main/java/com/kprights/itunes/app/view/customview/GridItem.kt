@@ -11,6 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.kprights.itunes.app.R
 import com.kprights.itunes.app.databinding.GridItemBinding
 import com.kprights.itunes.app.model.Entry
+import com.kprights.itunes.app.view.fragment.GridAdapter
 
 
 /**
@@ -22,8 +23,9 @@ import com.kprights.itunes.app.model.Entry
  */
 
 class GridItem(private val binding: GridItemBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(entry: Entry) {
+    fun bind(entry: Entry, onClickListener: GridAdapter.OnClickListener) {
         binding.entry = entry
+        binding.onClickListener = onClickListener
         binding.executePendingBindings()
     }
 

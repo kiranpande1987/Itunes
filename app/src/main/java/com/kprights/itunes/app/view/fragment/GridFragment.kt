@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.kprights.itunes.app.databinding.GridFragmentBinding
 import com.kprights.itunes.app.viewmodel.AppViewModel
 import com.kprights.itunes.app.viewmodel.AppViewModelFactory
@@ -38,7 +39,9 @@ class GridFragment : Fragment() {
         binding.viewModel = viewModel
 
         // RecyclerView To Adapter
-        binding.recyclerView.adapter = GridAdapter()
+        binding.recyclerView.adapter = GridAdapter(GridAdapter.OnClickListener {
+            this.findNavController().navigate(GridFragmentDirections.actionShowDetail(it))
+        })
 
         return binding.root
     }
