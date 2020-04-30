@@ -17,19 +17,19 @@ import com.kprights.itunes.app.view.customview.GridItem
 
 class GridAdapter(private val onClickListener: OnClickListener) :
     ListAdapter<Entry, GridItem>(EntryDiffCallback()) {
-    // To create News Feed List Item View
+    // To create Feed List Item View
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = GridItem.from(parent)
 
-    // Bind Single News to NewsListItem
+    // Bind Single Entry to NewsListItem
     override fun onBindViewHolder(holder: GridItem, position: Int) {
         val entry = getItem(position)
         holder.bind(entry, onClickListener)
     }
 
-    // New Difference Callback : To check differences between old list and new list of News.
+    // New Difference Callback : To check differences between old list and new list.
     class EntryDiffCallback : DiffUtil.ItemCallback<Entry>() {
         override fun areItemsTheSame(oldItem: Entry, newItem: Entry): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Entry, newItem: Entry): Boolean {
@@ -37,7 +37,7 @@ class GridAdapter(private val onClickListener: OnClickListener) :
         }
     }
 
-    class OnClickListener(val clickListener: (news: Entry) -> Unit) {
-        fun onClick(news: Entry) = clickListener(news)
+    class OnClickListener(val clickListener: (entry: Entry) -> Unit) {
+        fun onClick(entry: Entry) = clickListener(entry)
     }
 }

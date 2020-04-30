@@ -1,4 +1,4 @@
-package com.kprights.infosys.newsfeed.common
+package com.kprights.itunes.app.common
 
 import androidx.room.Dao
 
@@ -41,4 +41,4 @@ abstract class DatabaseService// : RoomDatabase()
 }
 
 @Dao
-interface NewsFeedDao
+interface EntryDao

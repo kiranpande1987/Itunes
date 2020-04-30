@@ -38,18 +38,18 @@ class GridItem(private val binding: GridItemBinding) : RecyclerView.ViewHolder(b
 
         @BindingAdapter("showImage")
         @JvmStatic
-        fun showImage(imageViewForNewsFeed: ImageView, imageUrl: String?) {
+        fun showImage(imageView: ImageView, imageUrl: String?) {
             imageUrl?.let {
                 val imgUri = imageUrl.toUri().buildUpon().scheme("http").build()
 
-                Glide.with(imageViewForNewsFeed.context)
+                Glide.with(imageView.context)
                     .load(imgUri)
                     .apply(
                         RequestOptions()
                             .placeholder(R.drawable.loading_animation)
                             .error(R.drawable.ic_broken_image)
                     )
-                    .into(imageViewForNewsFeed)
+                    .into(imageView)
             }
         }
     }

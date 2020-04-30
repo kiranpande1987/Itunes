@@ -30,7 +30,7 @@ class GridFragment : Fragment() {
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 
-        // Set Database Access Object for NewsFeed
+        // Set Database Access Object
         val application = requireNotNull(this.activity).application
         val appViewModelFactory = AppViewModelFactory(application)
         val viewModel = ViewModelProvider(this, appViewModelFactory).get(AppViewModel::class.java)
