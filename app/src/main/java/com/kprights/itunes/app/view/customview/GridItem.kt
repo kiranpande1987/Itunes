@@ -2,13 +2,7 @@ package com.kprights.itunes.app.view.customview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.core.net.toUri
-import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.kprights.itunes.app.R
 import com.kprights.itunes.app.databinding.GridItemBinding
 import com.kprights.itunes.app.model.DBEntry
 import com.kprights.itunes.app.view.fragment.GridAdapter
@@ -34,23 +28,6 @@ class GridItem(private val binding: GridItemBinding) : RecyclerView.ViewHolder(b
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = GridItemBinding.inflate(layoutInflater, parent, false)
             return GridItem(binding)
-        }
-
-        @BindingAdapter("showImage")
-        @JvmStatic
-        fun showImage(imageView: ImageView, imageUrl: String?) {
-            imageUrl?.let {
-                val imgUri = imageUrl.toUri().buildUpon().scheme("http").build()
-
-                Glide.with(imageView.context)
-                    .load(imgUri)
-                    .apply(
-                        RequestOptions()
-                            .placeholder(R.drawable.loading_animation)
-                            .error(R.drawable.ic_broken_image)
-                    )
-                    .into(imageView)
-            }
         }
     }
 }

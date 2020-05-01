@@ -21,9 +21,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.kprights.itunes.app.model.Entry
 
-/**
- * The [ViewModel] that is associated with the [DetailFragment].
- */
 class DetailViewModel(entry: Entry, app: Application) : AndroidViewModel(app) {
     private val selectedEntry = MutableLiveData<Entry>()
 

@@ -33,6 +33,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             app:imageUrl="@{entry.image}"
+            android:contentDescription="@string/app_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_broken_image" />
