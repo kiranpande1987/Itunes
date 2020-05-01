@@ -13,7 +13,7 @@ import com.kprights.itunes.app.model.DBEntry
  * Time : 12:42 PM
  */
 
-class LocalDataSource(val database: EntryDao) : IDataSource {
+class LocalDataSource(private val database: EntryDao) : IDataSource {
 
     fun saveEntries(dbEntry: DBEntry) {
         database.insert(entry = dbEntry)

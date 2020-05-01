@@ -16,8 +16,7 @@ class RemoteDataSource : IDataSource {
 
     suspend fun getFeed(): BaseModel {
         val deferred = WebService.getFeed()
-        val baseModel = deferred.await()
 
-        return baseModel
+        return deferred.await()
     }
 }
