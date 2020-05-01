@@ -24,6 +24,6 @@ class LocalDataSource(val database: EntryDao) : IDataSource {
     }
 
     fun deleteAllEntries() {
-
+        database.deleteAllEntries()
     }
 }

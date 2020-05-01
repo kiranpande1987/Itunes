@@ -36,10 +36,10 @@ class AppRepository(database: EntryDao) {
                 status.value = ApiStatus.LOADING
 
                 val model = remoteDataSource.getFeed()
-                localDataSource.deleteAllEntries()
 
                 withContext(Dispatchers.IO)
                 {
+                    localDataSource.deleteAllEntries()
                     insertIntoDB(model)
                 }
 
