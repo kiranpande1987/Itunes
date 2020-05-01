@@ -79,7 +79,7 @@ fun bindStatus(statusImageView: ImageView, status: ApiStatus?) {
 @BindingAdapter(value = ["currency", "amount"])
 fun format(textView: TextView, currency: String, amount: String) {
 
-    var a = amount.toDoubleOrNull()
+    val a = amount.toDoubleOrNull()
 
     textView.text = if (a != null && a > 0) {
         "$currency $a"
