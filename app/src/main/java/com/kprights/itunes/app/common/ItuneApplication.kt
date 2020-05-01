@@ -12,7 +12,7 @@ import timber.log.Timber
  * Time : 9:39 PM
  */
 
-class ItuneApplication : Application() {
+class ITuneApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())

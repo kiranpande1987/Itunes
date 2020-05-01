@@ -2,7 +2,6 @@ package com.kprights.itunes.app.viewmodel
 
 import com.kprights.itunes.app.common.WebService
 import com.kprights.itunes.app.model.BaseModel
-import timber.log.Timber
 
 
 /**
@@ -18,7 +17,7 @@ class RemoteDataSource : IDataSource {
     suspend fun getFeed(): BaseModel {
         val deferred = WebService.getFeed()
         val baseModel = deferred.await()
-        Timber.e("Remote Call")
+
         return baseModel
     }
 }

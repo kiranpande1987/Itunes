@@ -1,5 +1,8 @@
 package com.kprights.itunes.app.common
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -8,6 +11,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.snackbar.Snackbar
 import com.kprights.itunes.app.R
 import com.kprights.itunes.app.model.DBEntry
 import com.kprights.itunes.app.view.fragment.GridAdapter
@@ -59,6 +63,16 @@ fun bindStatus(statusImageView: ImageView, status: ApiStatus?) {
         ApiStatus.DONE -> {
             statusImageView.visibility = View.GONE
         }
+
+        ApiStatus.OFFLINE -> {
+            statusImageView.visibility = View.GONE
+            val snack = Snackbar.make(
+                statusImageView,
+                "You Are Looking Offline Data.",
+                Snackbar.LENGTH_LONG
+            )
+            snack.show()
+        }
     }
 }
 
@@ -72,5 +86,20 @@ fun format(textView: TextView, currency: String, amount: String) {
     } else {
         "Free"
     }
+}
+
+fun isOnline(context: Context): Boolean {
+    val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val capabilities =
+        connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+    if (capabilities != null) {
+        when {
+            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> return true
+            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> return true
+            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> return true
+        }
+    }
+    return false
 }
 
