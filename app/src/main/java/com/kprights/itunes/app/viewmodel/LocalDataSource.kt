@@ -1,5 +1,9 @@
 package com.kprights.itunes.app.viewmodel
 
+import androidx.lifecycle.LiveData
+import com.kprights.itunes.app.common.EntryDao
+import com.kprights.itunes.app.model.DBEntry
+
 
 /**
  * Copyright (c) 2020 for KPrights
@@ -9,22 +13,17 @@ package com.kprights.itunes.app.viewmodel
  * Time : 12:42 PM
  */
 
-class LocalDataSource : IDataSource {
+class LocalDataSource(val database: EntryDao) : IDataSource {
 
-    fun getFeed() {
-        //return MutableLiveData<BaseModel>()
+    fun saveEntries(dbEntry: DBEntry) {
+        database.insert(entry = dbEntry)
     }
 
+    fun getAllEntries(): LiveData<List<DBEntry>> {
+        return database.getAllEntries()
+    }
 
-//    fun getAllNews(): LiveData<List<News>> {
-//        return database.getAllNews()
-//    }
-//
-//    fun deleteAllNews() {
-//        database.clear()
-//    }
-//
-//    fun saveAllNews(news: News) {
-//        database.insert(news)
-//    }
+    fun deleteAllEntries() {
+
+    }
 }

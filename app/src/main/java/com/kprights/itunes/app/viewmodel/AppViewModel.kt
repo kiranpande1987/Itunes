@@ -4,7 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.kprights.itunes.app.model.Entry
+import com.kprights.itunes.app.common.EntryDao
+import com.kprights.itunes.app.model.DBEntry
 
 
 /**
@@ -15,11 +16,10 @@ import com.kprights.itunes.app.model.Entry
  * Time : 10:57 PM
  */
 
-class AppViewModel(application: Application) : AndroidViewModel(application) {
+class AppViewModel(database: EntryDao, application: Application) : AndroidViewModel(application) {
 
-    private var repository = AppRepository()
-    val entry: LiveData<List<Entry>> =
-        Transformations.map(repository.baseModel) { model -> model.feed.entry }
+    private var repository = AppRepository(database)
+    val dbEntries: LiveData<List<DBEntry>> = Transformations.map(repository.dbEntries) { it }
     val status: LiveData<AppRepository.ApiStatus> = Transformations.map(repository.status) { it }
 
     override fun onCleared() {

@@ -3,6 +3,7 @@ package com.kprights.itunes.app.viewmodel
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.kprights.itunes.app.common.DatabaseService
 
 
 /**
@@ -20,7 +21,7 @@ class AppViewModelFactory(
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AppViewModel::class.java)) {
-            return AppViewModel(application) as T
+            return AppViewModel(DatabaseService.getInstance(application).entryDao, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

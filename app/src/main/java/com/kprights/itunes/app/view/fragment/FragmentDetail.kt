@@ -5,10 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.kprights.itunes.app.databinding.FragmentDetailBinding
-import com.kprights.itunes.app.viewmodel.DetailViewModel
-import com.kprights.itunes.app.viewmodel.DetailViewModelFactory
 
 
 /**
@@ -30,13 +27,7 @@ class FragmentDetail : Fragment() {
         val binding = FragmentDetailBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-        val marsProperty = FragmentDetailArgs.fromBundle(arguments!!).entry
-
-        val viewModelFactory = DetailViewModelFactory(marsProperty, application)
-
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
-
-        binding.entry = marsProperty
+        binding.entry = FragmentDetailArgs.fromBundle(requireArguments()).entry
 
         return binding.root
     }

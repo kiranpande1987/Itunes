@@ -6,5 +6,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Name(
-    @SerializedName("label") val label: String
+    @SerializedName("label") val name: String
 ) : Parcelable

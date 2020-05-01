@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.kprights.itunes.app.R
-import com.kprights.itunes.app.model.Entry
-import com.kprights.itunes.app.model.Image
+import com.kprights.itunes.app.model.DBEntry
 import com.kprights.itunes.app.view.fragment.GridAdapter
 import com.kprights.itunes.app.viewmodel.AppRepository.ApiStatus
 
@@ -24,28 +23,23 @@ import com.kprights.itunes.app.viewmodel.AppRepository.ApiStatus
  */
 
 @BindingAdapter("imageUrl")
-fun bindImage(imgView: ImageView, images: List<Image>?) {
-    images?.let {
+fun bindImage(imgView: ImageView, images: String) {
+    images.let {
 
-        if (images.isNotEmpty()) {
-            val imageURL = images[images.size - 1].label
-            val imgUri = imageURL.toUri().buildUpon().scheme("https").build()
-            Glide.with(imgView.context)
-                .load(imgUri)
-                .apply(
-                    RequestOptions()
-                        .placeholder(R.drawable.loading_animation)
-                        .error(R.drawable.ic_broken_image)
-                )
-                .into(imgView)
-        }
-
-
+        val imgUri = images.toUri().buildUpon().scheme("https").build()
+        Glide.with(imgView.context)
+            .load(imgUri)
+            .apply(
+                RequestOptions()
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_broken_image)
+            )
+            .into(imgView)
     }
 }
 
 @BindingAdapter("listData")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<Entry>?) {
+fun bindRecyclerView(recyclerView: RecyclerView, data: List<DBEntry>?) {
     val adapter = recyclerView.adapter as GridAdapter
     adapter.submitList(data)
 }
