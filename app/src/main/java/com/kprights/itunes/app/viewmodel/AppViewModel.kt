@@ -37,4 +37,8 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         super.onCleared()
         repository.cancel()
     }
+
+    fun refreshView() {
+        repository.refreshData()
+    }
 }

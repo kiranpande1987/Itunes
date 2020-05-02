@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
@@ -16,6 +17,7 @@ import com.kprights.itunes.app.R
 import com.kprights.itunes.app.model.DBEntry
 import com.kprights.itunes.app.view.fragment.GridAdapter
 import com.kprights.itunes.app.viewmodel.AppRepository.ApiStatus
+import com.kprights.itunes.app.viewmodel.AppViewModel
 
 
 /**
@@ -88,6 +90,15 @@ fun format(textView: TextView, currency: String, amount: String) {
     }
 }
 
+@BindingAdapter("onRefreshListener")
+fun swipeToRefresh(swipeRefreshLayout: SwipeRefreshLayout, appViewModel: AppViewModel) {
+    swipeRefreshLayout.setOnRefreshListener {
+        swipeRefreshLayout.isRefreshing = true
+        appViewModel.refreshView()
+        swipeRefreshLayout.isRefreshing = false
+    }
+}
+
 fun isOnline(context: Context): Boolean {
     val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -102,4 +113,6 @@ fun isOnline(context: Context): Boolean {
     }
     return false
 }
+
+
 

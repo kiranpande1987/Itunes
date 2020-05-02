@@ -71,4 +71,8 @@ class AppRepository(database: EntryDao) {
     fun cancel() {
         job.cancel()
     }
+
+    fun refreshData() {
+        updateFromRemote()
+    }
 }
