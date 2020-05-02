@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.kprights.itunes.app.common.EntryDao
+import com.kprights.itunes.app.common.DatabaseService
 import com.kprights.itunes.app.common.isOnline
 import com.kprights.itunes.app.model.DBEntry
 import com.kprights.itunes.app.view.activity.MainActivity
@@ -18,9 +18,9 @@ import com.kprights.itunes.app.view.activity.MainActivity
  * Time : 10:57 PM
  */
 
-class AppViewModel(database: EntryDao, application: Application) : AndroidViewModel(application) {
+class AppViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var repository = AppRepository(database)
+    var repository = AppRepository(DatabaseService.getInstance(application).entryDao)
     val dbEntries: LiveData<List<DBEntry>> = Transformations.map(repository.dbEntries) { it }
     val status: LiveData<AppRepository.ApiStatus> =
         Transformations.map(repository.status) { offlineData(it) }

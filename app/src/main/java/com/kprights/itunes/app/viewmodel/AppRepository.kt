@@ -30,8 +30,11 @@ class AppRepository(database: EntryDao) {
     val dbEntries: LiveData<List<DBEntry>> = localDataSource.getAllEntries()
 
     init {
-        scope.launch {
+        updateFromRemote()
+    }
 
+    private fun updateFromRemote() {
+        scope.launch {
             try {
                 status.value = ApiStatus.LOADING
 
@@ -44,7 +47,6 @@ class AppRepository(database: EntryDao) {
                 }
 
                 status.value = ApiStatus.DONE
-
             } catch (e: Exception) {
                 status.value = ApiStatus.ERROR
             }
