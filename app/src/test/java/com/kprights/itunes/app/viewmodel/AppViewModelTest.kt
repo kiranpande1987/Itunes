@@ -2,6 +2,7 @@ package com.kprights.itunes.app.viewmodel
 
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -19,5 +20,10 @@ class AppViewModelTest {
     @Test
     fun testViewModel() {
         val viewModel = AppViewModel(ApplicationProvider.getApplicationContext())
+
+        Assert.assertEquals(AppRepository.ApiStatus.LOADING, viewModel.repository.status.value)
+//        Assert.assertEquals(AppRepository.ApiStatus.DONE, viewModel.status.value)
+//        Assert.assertEquals(AppRepository.ApiStatus.OFFLINE, viewModel.status.value)
+//        Assert.assertEquals(AppRepository.ApiStatus.ERROR, viewModel.status.value)
     }
 }
