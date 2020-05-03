@@ -22,6 +22,7 @@ class AppViewModelTest {
         val viewModel = AppViewModel(ApplicationProvider.getApplicationContext())
 
         Assert.assertEquals(AppRepository.ApiStatus.LOADING, viewModel.repository.status.value)
+
 //        Assert.assertEquals(AppRepository.ApiStatus.DONE, viewModel.status.value)
 //        Assert.assertEquals(AppRepository.ApiStatus.OFFLINE, viewModel.status.value)
 //        Assert.assertEquals(AppRepository.ApiStatus.ERROR, viewModel.status.value)
