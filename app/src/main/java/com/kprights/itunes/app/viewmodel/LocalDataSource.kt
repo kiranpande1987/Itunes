@@ -2,7 +2,7 @@ package com.kprights.itunes.app.viewmodel
 
 import androidx.lifecycle.LiveData
 import com.kprights.itunes.app.common.EntryDao
-import com.kprights.itunes.app.model.DBEntry
+import com.kprights.itunes.app.model.BaseModel
 
 
 /**
@@ -15,15 +15,15 @@ import com.kprights.itunes.app.model.DBEntry
 
 class LocalDataSource(private val database: EntryDao) : IDataSource {
 
-    fun saveEntries(dbEntry: DBEntry) {
-        database.insert(entry = dbEntry)
+    suspend fun saveEntries(baseModel: BaseModel) {
+        database.insert(baseModel = baseModel)
     }
 
-    fun getAllEntries(): LiveData<List<DBEntry>> {
+    fun getAllEntries(): LiveData<BaseModel> {
         return database.getAllEntries()
     }
 
-    fun deleteAllEntries() {
+    suspend fun deleteAllEntries() {
         database.deleteAllEntries()
     }
 }

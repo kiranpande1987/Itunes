@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.kprights.itunes.app.common.EntryDao
 import com.kprights.itunes.app.model.BaseModel
-import com.kprights.itunes.app.model.DBEntry
 import kotlinx.coroutines.*
 
 
@@ -16,7 +15,7 @@ import kotlinx.coroutines.*
  * Time : 11:00 PM
  */
 
-class AppRepository(database: EntryDao) {
+class AppRepository(database: EntryDao, val dispatcher: CoroutineDispatcher) {
 
     enum class ApiStatus { LOADING, ERROR, DONE, OFFLINE }
 
@@ -27,44 +26,62 @@ class AppRepository(database: EntryDao) {
     private val scope = CoroutineScope(job + Dispatchers.Main)
 
     val status: MutableLiveData<ApiStatus> = MutableLiveData<ApiStatus>()
-    val dbEntries: LiveData<List<DBEntry>> = localDataSource.getAllEntries()
+    val dbEntries: LiveData<BaseModel> = localDataSource.getAllEntries()
 
     init {
-        updateFromRemote()
+        updateDataFromRemoteDataSource()
     }
 
-    private fun updateFromRemote() {
-        scope.launch {
-            try {
-                status.value = ApiStatus.LOADING
+    // ----------------------------------------------------------------------------
+    // Fetch Latest Data from Web.
+    // if Success, Delete Data from Local Database.
+    // Save Latest Data to Local Database.
+    // If Error, Throw Exception.
+    fun updateDataFromRemoteDataSource() {
+        scope.launch(dispatcher) {
+            val baseModel = fetchDataFromRemote()
 
-                val model = remoteDataSource.getFeed()
-
-                withContext(Dispatchers.IO)
-                {
-                    localDataSource.deleteAllEntries()
-                    insertIntoDB(model)
-                }
-
+            baseModel?.let {
+                deleteDataFromDatabase()
+                insertDataIntoDatabase(it)
                 status.value = ApiStatus.DONE
-            } catch (e: Exception) {
-                status.value = ApiStatus.ERROR
             }
         }
     }
 
-    private fun insertIntoDB(model: BaseModel) {
+    suspend fun fetchDataFromRemote(): BaseModel? {
+        try {
+            status.value = ApiStatus.LOADING
+            return remoteDataSource.getFeed()
+        } catch (e: Exception) {
+            status.value = ApiStatus.ERROR
+        }
 
-        model.feed.entry.forEach {
-            localDataSource.saveEntries(
-                DBEntry().copy(
-                    name = it.name.name,
-                    image = it.image[it.image.size - 1].label,
-                    currency = it.price.attributes.currency,
-                    amount = it.price.attributes.amount,
-                    artist = it.artist.label
+        return null
+    }
+
+    suspend fun deleteDataFromDatabase() {
+        withContext(dispatcher)
+        {
+            localDataSource.deleteAllEntries()
+        }
+    }
+
+    suspend fun insertDataIntoDatabase(baseModel: BaseModel) {
+        withContext(dispatcher)
+        {
+            baseModel.feed.entry.forEach {
+                localDataSource.saveEntries(
+                    baseModel
+//                    DBEntry().copy(
+//                        name = it.name.name,
+//                        image = it.image[it.image.size - 1].label,
+//                        currency = it.price.attributes.currency,
+//                        amount = it.price.attributes.amount,
+//                        artist = it.artist.label
+//                    )
                 )
-            )
+            }
         }
     }
 
@@ -73,6 +90,8 @@ class AppRepository(database: EntryDao) {
     }
 
     fun refreshData() {
-        updateFromRemote()
+        updateDataFromRemoteDataSource()
     }
 }
+
+object SingleTon

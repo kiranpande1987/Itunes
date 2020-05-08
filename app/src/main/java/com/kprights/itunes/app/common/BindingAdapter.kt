@@ -4,7 +4,9 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -14,7 +16,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
 import com.kprights.itunes.app.R
-import com.kprights.itunes.app.model.DBEntry
+import com.kprights.itunes.app.model.Entry
+import com.kprights.itunes.app.model.Image
 import com.kprights.itunes.app.view.fragment.GridAdapter
 import com.kprights.itunes.app.viewmodel.AppRepository.ApiStatus
 import com.kprights.itunes.app.viewmodel.AppViewModel
@@ -29,10 +32,13 @@ import com.kprights.itunes.app.viewmodel.AppViewModel
  */
 
 @BindingAdapter("imageUrl")
-fun bindImage(imgView: ImageView, images: String) {
-    images.let {
+fun bindImage(imgView: ImageView, images: List<Image>) {
 
-        val imgUri = images.toUri().buildUpon().scheme("https").build()
+    val image = images[images.size - 1].label
+
+    image.let {
+
+        val imgUri = image.toUri().buildUpon().scheme("https").build()
         Glide.with(imgView.context)
             .load(imgUri)
             .apply(
@@ -45,7 +51,7 @@ fun bindImage(imgView: ImageView, images: String) {
 }
 
 @BindingAdapter("listData")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<DBEntry>?) {
+fun bindRecyclerView(recyclerView: RecyclerView, data: List<Entry>?) {
     val adapter = recyclerView.adapter as GridAdapter
     adapter.submitList(data)
 }
@@ -97,6 +103,13 @@ fun swipeToRefresh(swipeRefreshLayout: SwipeRefreshLayout, appViewModel: AppView
         appViewModel.refreshView()
         swipeRefreshLayout.isRefreshing = false
     }
+}
+
+@BindingAdapter("filterList")
+fun filterList(spinner: Spinner, list: List<String>) {
+    val adapter = spinner.adapter as ArrayAdapter<String>
+    adapter.addAll(list)
+    adapter.notifyDataSetChanged()
 }
 
 fun isOnline(context: Context): Boolean {

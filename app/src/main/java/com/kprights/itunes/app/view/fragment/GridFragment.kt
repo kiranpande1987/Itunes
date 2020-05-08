@@ -43,6 +43,7 @@ class GridFragment : Fragment() {
             findNavController().navigate(GridFragmentDirections.actionShowDetail(it))
         })
 
+        setHasOptionsMenu(true)
         return binding.root
     }
 }

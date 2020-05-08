@@ -3,7 +3,8 @@ package com.kprights.itunes.app.common
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.kprights.itunes.app.model.DBEntry
+import com.kprights.itunes.app.model.BaseModel
+import com.kprights.itunes.app.model.Convertors
 
 
 /**
@@ -14,7 +15,8 @@ import com.kprights.itunes.app.model.DBEntry
  * Time : 2:09 AM
  */
 
-@Database(entities = [DBEntry::class], version = 1, exportSchema = false)
+@Database(entities = [BaseModel::class], version = 1, exportSchema = false)
+@TypeConverters(Convertors::class)
 abstract class DatabaseService : RoomDatabase() {
     abstract val entryDao: EntryDao
 
@@ -44,11 +46,11 @@ abstract class DatabaseService : RoomDatabase() {
 @Dao
 interface EntryDao {
     @Insert
-    fun insert(entry: DBEntry)
+    suspend fun insert(baseModel: BaseModel)
 
-    @Query("SELECT * FROM DBEntry")
-    fun getAllEntries(): LiveData<List<DBEntry>>
+    @Query("SELECT * FROM BaseModel")
+    fun getAllEntries(): LiveData<BaseModel>
 
-    @Query("Delete from DBEntry")
-    fun deleteAllEntries()
+    @Query("Delete from BaseModel")
+    suspend fun deleteAllEntries()
 }

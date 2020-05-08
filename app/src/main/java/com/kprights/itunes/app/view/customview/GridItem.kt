@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kprights.itunes.app.databinding.GridItemBinding
-import com.kprights.itunes.app.model.DBEntry
+import com.kprights.itunes.app.model.Entry
 import com.kprights.itunes.app.view.fragment.GridAdapter
 
 
@@ -17,7 +17,7 @@ import com.kprights.itunes.app.view.fragment.GridAdapter
  */
 
 class GridItem(private val binding: GridItemBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(entry: DBEntry, onClickListener: GridAdapter.OnClickListener) {
+    fun bind(entry: Entry, onClickListener: GridAdapter.OnClickListener) {
         binding.entry = entry
         binding.onClickListener = onClickListener
         binding.executePendingBindings()

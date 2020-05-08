@@ -5,7 +5,7 @@
     <data>
         <variable
             name="entry"
-            type="com.kprights.itunes.app.model.DBEntry" />
+            type="com.kprights.itunes.app.model.Entry" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
-            android:text="@{entry.name}"
+            android:text="@{entry.name.name}"
             android:textSize="18sp"
             android:fontFamily="@font/roboto_slab"
             android:textColor="@android:color/black"
@@ -46,7 +46,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
-            android:text="@{entry.artist}"
+            android:text="@{entry.artist.label}"
             android:fontFamily="@font/roboto_slab"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageViewForLabel"
@@ -58,8 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
-            app:amount="@{entry.amount}"
-            app:currency="@{entry.currency}"
+            app:amount="@{entry.price.attributes.amount}"
+            app:currency="@{entry.price.attributes.currency}"
             android:fontFamily="@font/roboto_slab"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageViewForLabel"

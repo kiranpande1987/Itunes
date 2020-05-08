@@ -6,8 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.kprights.itunes.app.common.DatabaseService
 import com.kprights.itunes.app.common.isOnline
-import com.kprights.itunes.app.model.DBEntry
+import com.kprights.itunes.app.model.BaseModel
+import com.kprights.itunes.app.model.Entry
 import com.kprights.itunes.app.view.activity.MainActivity
+import kotlinx.coroutines.Dispatchers
 
 
 /**
@@ -20,8 +22,15 @@ import com.kprights.itunes.app.view.activity.MainActivity
 
 class AppViewModel(application: Application) : AndroidViewModel(application) {
 
-    var repository = AppRepository(DatabaseService.getInstance(application).entryDao)
-    val dbEntries: LiveData<List<DBEntry>> = Transformations.map(repository.dbEntries) { it }
+    var repository =
+        AppRepository(DatabaseService.getInstance(application).entryDao, Dispatchers.Main)
+    val dbEntries: LiveData<List<Entry>> =
+        Transformations.map(repository.dbEntries) { filterEntries(it, "m") }
+
+    private fun filterEntries(baseModel: BaseModel?, filterBy: String): List<Entry>? {
+        return baseModel?.feed?.entry?.filter { it.name.name.startsWith(filterBy, true) }
+    }
+
     val status: LiveData<AppRepository.ApiStatus> =
         Transformations.map(repository.status) { offlineData(it) }
 

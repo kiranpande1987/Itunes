@@ -5,7 +5,7 @@
     <data>
         <variable
             name="entry"
-            type="com.kprights.itunes.app.model.DBEntry" />
+            type="com.kprights.itunes.app.model.Entry" />
 
         <variable
             name="onClickListener"
@@ -35,7 +35,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/roboto_slab"
                 android:gravity="center_horizontal"
-                android:text="@{entry.name}"
+                android:text="@{entry.name.name}"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"

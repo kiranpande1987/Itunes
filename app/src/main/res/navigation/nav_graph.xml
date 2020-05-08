@@ -40,7 +40,7 @@
         tools:layout="@layout/fragment_detail">
         <argument
             android:name="entry"
-            app:argType="com.kprights.itunes.app.model.DBEntry" />
+            app:argType="com.kprights.itunes.app.model.Entry" />
     </fragment>
 
 
